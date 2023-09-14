@@ -9,7 +9,13 @@ const fs = require('fs')
 const { DownloaderHelper } = require('node-downloader-helper')
 
 async function download (url, saveDirectory) {
-  const downloader = new DownloaderHelper(url, saveDirectory)
+  const downloader = new DownloaderHelper(url, saveDirectory, {
+    agent: {
+      HTTP_PROXY: "http://nexus.tls.renault.fr:911",
+      HTTPS_PROXY: "http://nexus.tls.renault.fr:911",
+      NO_PROXY: "127.0.0.1,localhost,.tls.renault.fr"
+    }
+  })
 
   return new Promise((resolve, reject) => {
     downloader.on('end', () => resolve())
